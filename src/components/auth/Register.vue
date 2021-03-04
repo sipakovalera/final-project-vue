@@ -57,7 +57,7 @@
         <label for="password-confirm">Confirm Password</label>
         <p>{{ errors.fieldRConfirm }}</p>
       </div>
-    </div>   
+    </div>
     <div class="card-action">
       <div>
         <button type="submit" @click="signup(newName, newEmail, newPassword, newDate)">

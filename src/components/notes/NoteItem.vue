@@ -2,13 +2,13 @@
   <li>
     <h2>
       <span>
-        <input type="text" :value="name" @click="toggleInput" />
+        <input type="text" :value="title" @click="toggleInput" />
       </span>
-      <span @click="editUser(name, id)" v-if="toggleAreVisible">
+      <span @click="editNote(title, id)" v-if="toggleAreVisible">
         <i class="far fa-check-circle"></i>
       </span>
-      <span class="delete" @click="deleteUser(id)">
-        <i class="fas fa-user-times" id="delete"></i>
+      <span class="delete" @click="deleteNote(id)">
+        <i class="far fa-trash-alt" id="delete"></i>
       </span>
     </h2>
     <div class="btn-group">
@@ -19,16 +19,9 @@
     </div>
     <ul v-if="detailsAreVisible">
       <li>
-        <strong>Phone:</strong>
-        <input type="text" :value="phone" @click="toggleInput" />
-        <span @click="editUser(phone, id)" v-if="toggleAreVisible"
-          ><i class="far fa-check-circle"></i
-        ></span>
-      </li>
-      <li>
-        <strong>Email:</strong>
-        <input type="text" :value="email" @click="toggleInput" />
-        <span @click="editUser(email, id)" v-if="toggleAreVisible"
+        <strong>Description:</strong>
+        <input type="text" :value="describe" @click="toggleInput" />
+        <span @click="editNote(describe, id)" v-if="toggleAreVisible"
           ><i class="far fa-check-circle"></i
         ></span>
       </li>
@@ -42,12 +35,11 @@ import { mapActions } from "vuex";
 export default {
   props: {
     id: String,
-    name: String,
-    phone: String,
-    email: String,
+    title: String,
+    describe: String,
     role: String
   },
-  name: "userItem",
+  name: "noteItem",
   data() {
     return {
       detailsAreVisible: false,
@@ -56,34 +48,28 @@ export default {
   },
   computed: {
     roleClass() {
-      if (this.role === "Friend") {
-        return "role--friend";
+      if (this.role === "Important") {
+        return "role--important";
       }
-      if (this.role === "Family") {
-        return "role--family";
-      }
-      if (this.role === "Colleague") {
-        return "role--colleague";
+      if (this.role === "Irrelevant") {
+        return "role--irrelevant";
       }
       return null;
     }
   },
   methods: {
-    ...mapActions("contacts",["userEdit", "userDelete"]),
-    editUser(newName, newPhone, newEmail, id) {
+    ...mapActions("notes",["noteEdit", "noteDelete"]),
+    editNote(newTitle, newDescribe, id) {
       this.toggleAreVisible = !this.toggleAreVisible;
-      if (newName) {
-        this.userEdit({ id: id, name: newName });
+      if (newTitle) {
+        this.noteEdit({ id: id, title: newTitle });
       }
-      if (newPhone) {
-        this.userEdit({ id: id, phone: newPhone });
-      }
-      if (newEmail) {
-        this.userEdit({ id: id, email: newEmail });
+      if (newDescribe) {
+        this.noteEdit({ id: id, describe: newDescribe });
       }
     },
-    deleteUser(id) {
-      this.userDelete(id);
+    deleteNote(id) {
+      this.noteDelete(id);
     },
     toggleDetails() {
       this.detailsAreVisible = !this.detailsAreVisible;
@@ -143,17 +129,12 @@ button {
   color: white;
   border: 1px solid #68d89e;
 }
-.role--friend {
-  background-color: rgb(123, 132, 235);
-  border: 1px solid rgb(123, 132, 235);
-  color: white;
-}
-.role--family {
+.role--important {
   background-color: #e26e95;
   border: 1px solid #e26e95;
   color: white;
 }
-.role--colleague {
+.role--irrelevant {
   background-color: #68d89e;
   color: white;
   border: 1px solid #68d89e;

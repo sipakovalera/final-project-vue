@@ -1,14 +1,14 @@
 import { createStore } from "vuex";
-import actions from "./modules/users/actions";
-import mutations from "./modules/users/mutations";
-import state from "./modules/users/state";
-import contacts from "./modules/users/index";
+import actions from "./modules/notes/actions";
+import mutations from "./modules/notes/mutations";
+import state from "./modules/notes/state";
+import notes from "./modules/notes/index";
 import auth from "./modules/auth/index";
-import getters from "./modules/users/getters";
+import getters from "./modules/notes/getters";
 
 export default createStore({
   modules: {
-    contacts,
+    notes,
     auth
   },
   stateStore: {

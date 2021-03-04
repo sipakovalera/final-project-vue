@@ -3,10 +3,13 @@
     <nav>
       <ul>
         <li v-if="isLoggedIn">
-          <router-link to="/users">Contacts</router-link>
+          <router-link to="/notes">Notes</router-link>
         </li>
         <li v-if="isLoggedIn">
           <router-link to="/profile">Profile</router-link>
+        </li>
+        <li v-if="isLoggedIn">
+          <router-link to="/users">Users</router-link>
         </li>
         <li class="logout" v-if="isLoggedIn">
           <a @click="logoutUser">Logout</a>

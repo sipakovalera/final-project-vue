@@ -5,6 +5,7 @@ import Login from "../components/auth/Login";
 import UsersList from "../components/users/UsersList";
 import Profile from "../components/profile/Profile";
 import Register from "../components/auth/Register";
+import NotesList from "../components/notes/NotesList";
 
 const routes = [
   {
@@ -16,6 +17,12 @@ const routes = [
     name: "login",
     meta: { publicAuth: true },
     component: Login
+  },
+  {
+    path: "/notes",
+    name: "notesList",
+    // meta: { needsAuth: true },
+    component: NotesList
   },
   {
     path: "/users",
