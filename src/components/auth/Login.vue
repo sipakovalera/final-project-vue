@@ -1,24 +1,24 @@
 <template>
-  <Form @submit="onSubmit" v-slot="{ errors }">
+  <Form @submit.prevent="loginUser" v-slot="{ errors }">
     <div class="card-content">
       <span class="card-title">Sign in</span>
       <div class="input-field">
         <Field 
-          id="email" 
+          id="login" 
           type="text" 
-          name="fieldEmail"
-          v-model="email" 
-          :rules="validateEmail"
+          name="fieldLogin"
+          v-model="currentLogin" 
+          :rules="validateLogin"
         />
         <label for="email">Email</label>
-        <p>{{errors.fieldEmail}}</p>
+        <p>{{errors.fieldLogin}}</p>
       </div>
       <div class="input-field">
         <Field
           id="password" 
           type="password"
           name="fieldPassword"
-          v-model="password" 
+          v-model="currentPassword" 
           :rules="validatePassword"
         />
         <label for="password">Password</label>
@@ -29,7 +29,7 @@
       <div>
         <button 
           type="submit" 
-          @click="loginUser(email, password)"
+          @click="loginUser(currentLogin, currentPassword)"
         >
           Login
         </button>
@@ -54,8 +54,8 @@ export default {
     },
   data(){
       return {
-        email : "",
-        password : ""
+        currentLogin : "",
+        currentPassword : ""
       }
     },
     name: "login",
@@ -63,10 +63,11 @@ export default {
       ...mapActions("auth", ["login"]),
       loginUser() {
         this.login({
-          email: this.email,
-          password: this.password
-        })
-       this.$router.push('/profile')
+          login: this.currentLogin,
+          password: this.currentPassword
+          })
+          .then(() => this.$router.push("/profile"))
+          .catch(err => console.log(err));
       },
       validatePassword(value) {
         if(!value){
@@ -76,7 +77,7 @@ export default {
           return "This password too short"
         } else return true
       },
-      validateEmail(value){
+      validateLogin(value){
         if (!value) {
           return 'Type your email';
       }

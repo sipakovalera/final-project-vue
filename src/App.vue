@@ -13,16 +13,6 @@ import NavLink from "./components/navigation/NavLink";
 export default {
   components: {
     NavLink
-  },
-    created() {
-    this.$http.interceptors.response.use(undefined, (err) => {
-      return new Promise(function() {
-        if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
-          this.$store.dispatch("auth", ["logout"])
-        }
-        throw err;
-      });
-    });
   }
 }
 </script>

@@ -21,7 +21,7 @@ const routes = [
   {
     path: "/notes",
     name: "notesList",
-    // meta: { needsAuth: true },
+    meta: { needsAuth: true },
     component: NotesList
   },
   {

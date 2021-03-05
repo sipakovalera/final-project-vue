@@ -1,4 +1,3 @@
 export default {
-  isLoggedIn: state => !!state.token,
-  authStatus: state => state.status
+  isLoggedIn: state => state.token !== null
 };

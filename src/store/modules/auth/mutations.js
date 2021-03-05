@@ -1,17 +1,12 @@
 export default {
-  uth_request(state) {
-    state.status = "loading";
+  register(state, user) {
+    state.user = user
   },
-  auth_success(state, token, user) {
-    state.status = "success";
-    state.token = token;
-    state.user = user;
-  },
-  auth_error(state) {
-    state.status = "error";
+  login(state, token, user) {
+    state.token = token,
+    state.token = user
   },
   logout(state) {
-    state.status = "";
-    state.token = "";
+    state.token = null
   }
 };

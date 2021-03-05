@@ -1,5 +1,5 @@
 <template>
-  <Form  @submit="onSubmit" v-slot="{ errors }">
+  <Form  @submit.prevent="signup" v-slot="{ errors }">
     <div class="card-content">
       <span class="card-title">Sign up</span>
       <div class="input-field">
@@ -10,30 +10,19 @@
           v-model="newName"
           :rules="isRequired" 
         />
-        <label for="name">Full Name</label>
+        <label for="name">Name</label>
         <p>{{ errors.fieldName }}</p> 
       </div>
       <div class="input-field">
         <Field 
-          id="email" 
-          type="text" 
-          name="fieldEmail" 
-          v-model="newEmail"
-          :rules="isEmail" 
+          id="login" 
+          type="email" 
+          name="fieldLogin" 
+          v-model="newLogin"
+          :rules="isLogin" 
         />
-        <label for="email">Email</label>
-        <p>{{ errors.fieldEmail }}</p> 
-      </div>
-      <div class="input-field">
-        <Field 
-          id="date" 
-          type="date"
-          name="fieldDate" 
-          v-model="newDate"
-          :rules="isRequired"
-        />
-        <label for="date">Birth date</label>
-        <p>{{ errors.fieldDate }}</p> 
+        <label for="login">Email</label>
+        <p>{{ errors.fieldLogin }}</p> 
       </div>
       <div class="input-field">
         <Field 
@@ -52,7 +41,7 @@
           type="password" 
           name="fieldRConfirm" 
           v-model="password_confirmation"
-          :rules="isRequired" 
+          :rules="isCorrect" 
         />
         <label for="password-confirm">Confirm Password</label>
         <p>{{ errors.fieldRConfirm }}</p>
@@ -60,7 +49,7 @@
     </div>
     <div class="card-action">
       <div>
-        <button type="submit" @click="signup(newName, newEmail, newPassword, newDate)">
+        <button type="submit" @click="signup(newName, newLogin, newPassword)">
           Sign up!
         </button>
       </div>
@@ -85,8 +74,7 @@ export default {
   data(){
       return {
         newName : "",
-        newEmail : "",
-        newDate: "",
+        newLogin : "",
         newPassword : "",
         password_confirmation : ""
       }
@@ -96,11 +84,12 @@ export default {
       signup(){
         this.register({
           name: this.newName,
-          email: this.newEmail,
-          date: this.newDate,
+          login: this.newLogin,
           password: this.newPassword
         })
-        this.$router.push('/profile')
+        .then(alert('Great, login'))
+        .then(() => this.$router.push("/login"))
+        .catch(err => console.log(err));
       },
       isRequired(value) {
         if(!value){
@@ -110,15 +99,23 @@ export default {
           return "This field is too short"
         } else return true
       },
-      isEmail(value) {
+      isLogin(value) {
         if (!value) {
           return 'This field is required';
-      }
+        }
         if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
           return 'This field must be a valid email';
-      }
-      return true;
-    }
+        }
+        return true;
+      },
+      isCorrect(value) {
+        if(!value){
+          return "This field is required"
+        }
+        if(value !== this.newPassword){
+          return "Invalid password"
+        } else return true
+      },
   }
 }
 </script>

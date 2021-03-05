@@ -1,5 +1,4 @@
 export default {
-  status: "",
-  token: localStorage.getItem("token") || "",
-  user: {}
+  token: localStorage.getItem('token') || null,
+  user: null
 };
